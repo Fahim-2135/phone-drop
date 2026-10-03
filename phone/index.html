@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <title>Phone Drop</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icon.png">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>Phone Drop</h1>
+    <div id="conn" class="conn">Connecting…</div>
+  </header>
+
+  <div id="nokey" class="banner" hidden>
+    Scan the QR code on your PC to connect (tray icon → <b>Show QR code</b>).
+  </div>
+  <div id="offline" class="banner" hidden>
+    Can't reach your PC. Is it on, and on the same Wi-Fi?<br>
+    Changed Wi-Fi? Close this and open Phone Drop from your home-screen icon again: it finds the PC's new address.
+  </div>
+
+  <main id="app" hidden>
+    <section>
+      <h2>Send to PC</h2>
+      <div class="row">
+        <label class="big">
+          <input id="files" type="file" multiple hidden>
+          Photos &amp; files
+        </label>
+        <label class="big secondary">
+          <input id="camera" type="file" accept="image/*" capture="environment" hidden>
+          Take photo
+        </label>
+      </div>
+      <ul id="uploads" class="list"></ul>
+
+      <textarea id="text" rows="3" placeholder="Paste or type text… it lands on the PC clipboard"></textarea>
+      <button id="sendText" class="send">Send text</button>
+      <div id="textStatus" class="hint"></div>
+    </section>
+
+    <section>
+      <h2>From PC</h2>
+      <p id="empty" class="hint">Nothing yet. Drag files onto the drop box on your PC, or right-click a file → Send to → Phone.</p>
+      <ul id="inbox" class="list"></ul>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

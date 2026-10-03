@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="referrer" content="no-referrer">
+  <title>Phone Drop</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="stylesheet" href="launcher.css">
+</head>
+<body>
+  <img class="logo" src="icon.png" alt="" width="72" height="72">
+  <h1>Phone Drop</h1>
+
+  <!-- shown right after scanning the QR code -->
+  <section id="setup" hidden>
+    <p class="ok">✓ This phone is set up.</p>
+    <ol>
+      <li>Tap <b>⋮</b> (top right in Chrome) → <b>Add to Home screen</b>.</li>
+      <li>From now on, open Phone Drop with that icon. It finds your PC by itself, even after the PC changes Wi-Fi.</li>
+    </ol>
+    <button id="open">Open Phone Drop</button>
+  </section>
+
+  <!-- shown while looking for the PC -->
+  <section id="finding" hidden>
+    <p class="status">Finding your PC…</p>
+  </section>
+
+  <section id="trouble" hidden>
+    <p class="error" id="troubleText"></p>
+    <button id="retry">Try again</button>
+  </section>
+
+  <section id="none" hidden>
+    <p>Phone Drop sends photos, files and text between your phone and your PC over Wi-Fi.</p>
+    <p>Install it on your PC, then scan the QR code it shows. <a href="https://github.com/Fahim-2135/phone-drop">Get Phone Drop</a></p>
+  </section>
+
+  <p class="fine">Your key and your PC's address stay on this phone. This page only looks up where your PC is.</p>
+
+  <script src="launcher.js"></script>
+</body>
+</html>

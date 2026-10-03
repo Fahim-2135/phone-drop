@@ -1,0 +1,49 @@
+{
+  "name": "phone-drop",
+  "version": "1.0.0",
+  "description": "Send photos, files and text between your phone and your PC over home wifi",
+  "author": "Fahim",
+  "homepage": "https://github.com/Fahim-2135/phone-drop",
+  "repository": "github:Fahim-2135/phone-drop",
+  "launcherUrl": "https://fahim-2135.github.io/phone-drop/",
+  "license": "MIT",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "node scripts/start.js",
+    "icon": "node scripts/make-icon.js",
+    "dist": "node scripts/make-icon.js && electron-builder"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.fahim.phonedrop",
+    "productName": "phone-drop",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "network.js",
+      "png.js",
+      "scripts/make-icon.js",
+      "pc/**",
+      "phone/**"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "runAfterFinish": false
+    }
+  }
+}

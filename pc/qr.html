@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+  <title>Phone Drop</title>
+  <link rel="stylesheet" href="qr.css">
+</head>
+<body>
+  <h1>Phone Drop</h1>
+  <p class="lead">Send photos, files and text between your phone and this PC.</p>
+
+  <div id="qr" class="qr"></div>
+  <div id="status" class="status waiting">Waiting for your phone…</div>
+
+  <ol>
+    <li>Scan the code with your phone's camera and open the link.</li>
+    <li>In Chrome, tap <b>⋮</b> → <b>Add to Home screen</b>.</li>
+    <li>Open Phone Drop from that icon whenever your phone is on the <b>same Wi-Fi</b> as this PC. It finds the PC by itself, even on a different Wi-Fi.</li>
+  </ol>
+
+  <p class="small">This PC: <span id="address">…</span> · <button id="copy">Copy direct link</button></p>
+  <p class="small">Phone can't connect? Set this Wi-Fi to <b>Private</b> in Windows settings and allow Phone Drop through the firewall.
+    University or café Wi-Fi often blocks devices from seeing each other: use your phone's hotspot instead.</p>
+
+  <script src="qr.js"></script>
+</body>
+</html>
