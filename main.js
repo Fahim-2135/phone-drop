@@ -577,7 +577,12 @@ function appIcon(size) {
   return iconCache[size];
 }
 
-const loginOptions = app.isPackaged ? {} : { path: process.execPath, args: [path.resolve(__dirname)] };
+// Starting at login passes this flag, so the app can tell it apart from you clicking its icon.
+const LOGIN_FLAG = '--at-login';
+const loginOptions = app.isPackaged
+  ? { args: [LOGIN_FLAG] }
+  : { path: process.execPath, args: [path.resolve(__dirname), LOGIN_FLAG] };
+const startedAtLogin = process.argv.includes(LOGIN_FLAG);
 
 function refreshTray() {
   if (!tray) return;
@@ -647,17 +652,33 @@ ipcMain.on('hide-box', () => setBox(false));
 if (!app.requestSingleInstanceLock()) {
   app.quit();
 } else {
+  // Opening the app while it's already running: files from "Send to" go to the phone; otherwise
+  // the drop box comes back (it may have been hidden with ×), plus the QR code until a phone has connected.
   app.on('second-instance', (_event, argv) => {
     const files = filesFromArgs(argv);
-    if (files.length) sendFiles(files);
-    else showQr();
+    if (files.length) return sendFiles(files);
+    if (!config.box || !boxWindow) setBox(true);
+    else boxWindow.showInactive();
+    if (!config.phoneSeen) showQr();
   });
 
   app.whenReady().then(() => {
     loadConfig();
     if (!config.loginSet && app.isPackaged) {
-      app.setLoginItemSettings({ openAtLogin: true });
+      app.setLoginItemSettings({ openAtLogin: true, ...loginOptions });
       config.loginSet = true;
+      config.loginFlagSet = true;
+      saveConfig();
+    }
+    // versions before 1.0.1 registered the login item without the flag: add it, keeping the user's choice
+    if (app.isPackaged && !config.loginFlagSet) {
+      if (app.getLoginItemSettings().openAtLogin) app.setLoginItemSettings({ openAtLogin: true, ...loginOptions });
+      config.loginFlagSet = true;
+      saveConfig();
+    }
+    // clicking the app's icon always brings the drop box back; starting at login keeps your choice
+    if (!startedAtLogin && !config.box) {
+      config.box = true;
       saveConfig();
     }
     fs.mkdirSync(outboxDir, { recursive: true });
